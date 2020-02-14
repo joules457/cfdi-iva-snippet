@@ -47,7 +47,7 @@ def get_directory_total_iva_amount(my_dir: str):
                     total_amount += decimal.Decimal(amount)
                     cfdi_info.append({
                         'issuer_name': issuer_name,
-                        'amount': amount,
+                        'iva_amount': amount,
                     })
             result['info'] = cfdi_info
             result['total_iva_amount'] = float(total_amount)
