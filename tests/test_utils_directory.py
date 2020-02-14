@@ -30,7 +30,6 @@ def test_get_directory_files(dir_path):
         else:
             assert result['status'] == 0
             assert isinstance(result['files'], list)
-            assert \
-                json.dumps(result['files']) == json.dumps(scenario['result'])
-        print(result)
-    # assert False
+            assert json.dumps(result['files'].sort()) == \
+                json.dumps(scenario['result'].sort())
+        # print(result)

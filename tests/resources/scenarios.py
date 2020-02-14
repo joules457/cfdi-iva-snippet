@@ -11,7 +11,7 @@ DIRECTORY_FILES = [
             'include_pattern': None,
             'exclude_pattern': None
         },
-        'result': ['mock1.txt', 'mock3.xml', 'mock2.xml'],
+        'result': ['cfdi.xml', 'mock1.txt', 'mock2.xml', 'mock3.xml'],
         'error': False,
     },
     {
@@ -20,7 +20,7 @@ DIRECTORY_FILES = [
             'include_pattern': ccfdi.XML_PATTERN,
             'exclude_pattern': None
         },
-        'result': ['mock3.xml', 'mock2.xml'],
+        'result': ['cfdi.xml', 'mock2.xml', 'mock3.xml'],
         'error': False,
     },
     {
@@ -31,4 +31,28 @@ DIRECTORY_FILES = [
         },
         'error': True,
     }
+]
+
+BEAUTIFULSOUP_FILES = [
+    {
+        'payload': {
+            'filename': 'resources/files/cfdi.xml',
+            'parser': 'html.parser',
+        },
+        'error': False,
+    },
+    {
+        'payload': {
+            'filename': 'resources/files/cfdi.xml',
+            'parser': 'html.parser',
+        },
+        'error': False,
+    },
+    {
+        'payload': {
+            'filename': 'nonexistent/file/algo.xml',
+            'parser': 'html.parser',
+        },
+        'error': True,
+    },
 ]
