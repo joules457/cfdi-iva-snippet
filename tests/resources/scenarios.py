@@ -56,3 +56,22 @@ BEAUTIFULSOUP_FILES = [
         'error': True,
     },
 ]
+
+IVA_AMOUNT = [
+    {
+        'payload': {
+            'dir_path': 'resources/files',
+        },
+        'total_iva_amount': 211.73,
+        'error': False,
+    },
+    {
+        'payload': {
+            'dir_path': 'nonexistent/path',
+            'include_pattern': None,
+            'exclude_pattern': None
+        },
+        'total_iva_amount': None,
+        'error': True,
+    }
+]
