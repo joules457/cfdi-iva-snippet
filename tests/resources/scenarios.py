@@ -75,3 +75,60 @@ IVA_AMOUNT = [
         'error': True,
     }
 ]
+
+CFDI_AMOUNTS = [
+    {
+        'payload': {
+            'dir_path': 'resources/files',
+        },
+        'iva_cfdi_amount': 211.73,
+        'total_cfdi_amount': 750,
+        'subtotal_cfdi_amount': 646.54,
+        'error': False,
+    },
+    {
+        'payload': {
+            'dir_path': 'nonexistent/path',
+            'include_pattern': None,
+            'exclude_pattern': None
+        },
+        'iva_cfdi_amount': None,
+        'total_cfdi_amount': None,
+        'subtotal_cfdi_amount': None,
+        'error': True,
+    }
+]
+
+CSV_FILE = [
+    {
+        'payload': {
+            'filename': '',
+            'dict_list': []
+        },
+        'contents': '',
+        'error': True
+    },
+    {
+        'payload': {
+            'filename': 'test.csv',
+            'dict_list': []
+        },
+        'contents': '''
+''',
+        'error': False
+    },
+    {
+        'payload': {
+            'filename': 'test.csv',
+            'dict_list': [
+                {'field1': 'value', 'field2': 2},
+                {'field1': 'value2', 'field2': 25.3},
+            ]
+        },
+        'contents': '''field1,field2
+value,2
+value2,25.3
+''',
+        'error': False
+    },
+]

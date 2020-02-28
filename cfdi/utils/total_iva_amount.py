@@ -12,6 +12,19 @@ decimal.getcontext().prec = 8
 
 
 def get_directory_total_iva_amount(my_dir: str):
+    """GEt Total IVA amount for given directory.
+
+    Parameters
+    ----------
+    my_dir : str
+        CFDIs directory.
+
+    Returns
+    -------
+    dict
+        REsult dict {status, info, total_iva_amount}.
+
+    """
     result = {
         'status': 0,
         'info': [],
@@ -34,21 +47,17 @@ def get_directory_total_iva_amount(my_dir: str):
             if cfdi_bs['status'] == 1:
                 raise cfdi_bs['error']
             issuer = cfdi_bs['bso'].find('cfdi:emisor')
-            taxes = []
-            for tmp in cfdi_bs['bso'].find_all('cfdi:impuestos'):
-                taxes = tmp.find_all(
-                    'cfdi:traslado',
-                    attrs={'impuesto': '002'}
-                )
-            for tax in taxes:
+            iva_amount = get_cfdi_iva_amount(cfdi_bs['bso'])
+
+            if iva_amount > 0:
+                total_amount += decimal.Decimal(iva_amount)
                 issuer_name = issuer.get('nombre')
-                amount = tax.get('importe')
-                if amount is not None:
-                    total_amount += decimal.Decimal(amount)
-                    cfdi_info.append({
-                        'issuer_name': issuer_name,
-                        'iva_amount': amount,
-                    })
+                issuer_rfc = issuer.get('rfc')
+                cfdi_info.append({
+                    'issuer_name': issuer_name,
+                    'issuer_rfc': issuer_rfc,
+                    'iva_amount': float(iva_amount),
+                })
             result['info'] = cfdi_info
             result['total_iva_amount'] = float(total_amount)
 
@@ -59,3 +68,31 @@ def get_directory_total_iva_amount(my_dir: str):
         result['error'] = err
 
     return result
+
+
+def get_cfdi_iva_amount(cfdi_bso):
+    """GEt CFDI IVA AMOUNT by CFDI BeautifulSoup Object.
+
+    Parameters
+    ----------
+    cfdi_bso : BeautifulSoup
+        CFDI BeautifulSoup Object.
+
+    Returns
+    -------
+    Decimal
+        CFDI IVA amount.
+
+    """
+    total_amount = 0
+    taxes = []
+    for tmp in cfdi_bso.find_all('cfdi:impuestos'):
+        taxes = tmp.find_all(
+            'cfdi:traslado',
+            attrs={'impuesto': '002'}
+        )
+    for tax in taxes:
+        amount = tax.get('importe')
+        if amount is not None:
+            total_amount += decimal.Decimal(amount)
+    return total_amount
