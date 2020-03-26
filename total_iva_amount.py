@@ -5,6 +5,7 @@ Total IVA amount
 """
 import sys
 import argparse
+from tabulate import tabulate
 from cfdi.utils import total_iva_amount as tia
 
 
@@ -35,6 +36,8 @@ script_args = vars(parser.parse_args())
 
 def main(my_args):
     my_status = True
+    data_table = []
+    total_table = []
     try:
         print('CFDI Directory: ', my_args['directory'])
         total_amount = tia.get_directory_total_iva_amount(
@@ -44,13 +47,16 @@ def main(my_args):
             raise total_amount['error']
         if my_args['verbose']:
             for item in total_amount['info']:
-                print(
-                    item['issuer_name'],
-                    item['iva_amount'],
-                )
+                data_table.append(item)
+            print(
+                tabulate(data_table, headers='keys')
+            )
+        total_table.append({
+            'total': 'IVA Amount',
+            'amount': total_amount['total_iva_amount']
+        })
         print(
-            'Total IVA Amount: ',
-            total_amount['total_iva_amount']
+            tabulate(total_table)
         )
     except Exception as err:
         print('ERR: ', err)
@@ -60,5 +66,4 @@ def main(my_args):
 
 if __name__ == "__main__":
     my_status = 0 if main(script_args) is True else 1
-    # print('Exiting with status code', my_status)
     sys.exit(my_status)
