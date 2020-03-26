@@ -36,7 +36,6 @@ script_args = vars(parser.parse_args())
 
 def main(my_args):
     my_status = True
-    data_table = []
     total_table = []
     try:
         print('CFDI Directory: ', my_args['directory'])
@@ -46,10 +45,8 @@ def main(my_args):
         if total_amount['status'] == 1:
             raise total_amount['error']
         if my_args['verbose']:
-            for item in total_amount['info']:
-                data_table.append(item)
             print(
-                tabulate(data_table, headers='keys')
+                tabulate(total_amount['info'], headers='keys')
             )
         total_table.append({
             'total': 'IVA Amount',
