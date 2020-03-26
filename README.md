@@ -11,13 +11,17 @@ pip install -r requirements.txt
 
 ## Usage
 
-Just run
+For total amount just run
 ```Shell
 # As python script
 python total_iva_amount.py -d /home/cfdi/2020/01 --verbose
 
-# As shell under Linux
-./total_iva_amount.py -d /home/cfdi/2020/01
+```
+
+For CFDI Directory info
+```Shell
+# As python script
+python cfdi_directory.py -d /home/cfdi/2020/01 -v  -e
 
 ```
 
