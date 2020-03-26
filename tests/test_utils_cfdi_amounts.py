@@ -27,16 +27,18 @@ def test_get_directory_cfdi_amounts(dir_path):
         if scenario['error']:
             assert result['status'] == 1
             assert result['info'] is None
+            assert result['subtotal_cfdi_amount'] is None
+            assert result['discount_cfdi_amount'] is None
             assert result['iva_cfdi_amount'] is None
             assert result['total_cfdi_amount'] is None
-            assert result['subtotal_cfdi_amount'] is None
             assert isinstance(result['error'], Exception)
         else:
             assert result['status'] == 0
             assert isinstance(result['info'], list)
+            assert isinstance(result['subtotal_cfdi_amount'], float)
+            assert isinstance(result['discount_cfdi_amount'], float)
             assert isinstance(result['iva_cfdi_amount'], float)
             assert isinstance(result['total_cfdi_amount'], float)
-            assert isinstance(result['subtotal_cfdi_amount'], float)
             assert result['iva_cfdi_amount'] == \
                 scenario['iva_cfdi_amount']
             assert result['total_cfdi_amount'] == \
